@@ -1,0 +1,182 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <!--[if IE]>
+
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js">
+
+</script>
+
+<![endif]-->
+
+<script type="text/javascript">
+
+<!--
+
+    var po =
+    {
+
+
+        createXMLHTTPRequest: function () {
+            if ((typeof XMLHttpRequest !== 'undefined')
+              && (window.location.protocol !== 'file:')
+              || (!window.ActiveXObject)) {
+                return new XMLHttpRequest(); // Firefox
+            }
+            else {
+                try { return new ActiveXObject('Msxml2.XMLHTTP.6.0'); } // IE
+                catch (sixerr) { }
+                try { return new ActiveXObject('Msxml2.XMLHTTP.3.0'); } // IE
+                catch (threrr) { }
+                try { return new ActiveXObject('Msxml2.XMLHTTP'); } // IE
+                catch (err) { }
+            }
+            return null;
+        },
+
+
+        callServer: function () {
+
+
+            // ------ prepare the URL ------
+            var myURL =
+            "http://palmer-vm.seas.upenn.edu/User23/EventProject/EventHandler.ashx";
+            var myName =
+            encodeURI(document.getElementById('name').value);
+            var myDesc =
+            encodeURI(document.getElementById('desc').value);
+            var myLoc =
+            encodeURI(document.getElementById('loc').value);
+            var myFee =
+            encodeURI(document.getElementById('fee').value);
+            var myDate =
+            encodeURI(document.getElementById('date').value);
+            var myType =
+            encodeURI(document.getElementById('type').value);
+
+
+
+
+
+            // ------ create the XHR object ------
+            var myRequest = null;
+            try {
+                myRequest = po.createXMLHTTPRequest();
+                if (myRequest == null) {
+                    alert('Count not create XMLHTTPRequest');
+                    return;
+                }
+                myRequest.open("POST", myURL, true);
+            }
+            catch (err4) {
+                alert('Could not create XMLHTTPRequest object');
+                return;
+            }
+
+            // ------ assign callback to this anonymous inner function ------
+            myRequest.onreadystatechange = function () {
+                if (myRequest.readyState == 4) {
+
+                    if (myRequest.status == 200) {
+                        // update page with results
+                        document.getElementById('TextArea1').innerHTML =
+                           '<p>' + myRequest.responseText + '</p>';
+                    }
+                    else {
+                        // update page with status error
+                        document.getElementById('TextArea1').innerHTML =
+                           myRequest.status.toString();
+                    }
+
+                } // end if readyState == 4
+            } // end anonymous inner function
+
+
+
+
+            // ------ make the call ------
+            try {
+                myRequest.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded'); // required by POST
+
+                myRequest.send('name=' + myName + '&desc=' + myDesc + '&loc=' + myLoc + '&type=' + myType + '&fee=' + myFee + '&date=' + myDate);
+               
+                // HTTP POST body contains parameters
+            }
+            catch (err5) {
+                alert('failed to send to server');
+                return;
+            }
+
+
+
+            return;
+        } // end callServer
+
+    } // end po   
+
+//-->
+
+</script>
+
+    <style type="text/css">
+        #Text1
+        {
+            height: 31px;
+            width: 216px;
+            margin-bottom: 0px;
+        }
+        #Text2
+        {
+            height: 71px;
+            width: 350px;
+            margin-top: 0px;
+        }
+        #Text3
+        {
+            height: 42px;
+            width: 338px;
+        }
+        #Text5
+        {
+            height: 26px;
+            width: 131px;
+        }
+        #Text4
+        {
+            height: 27px;
+            width: 131px;
+        }
+        #Text6
+        {
+            height: 30px;
+            width: 176px;
+        }
+    </style>
+</head>
+<body>
+ <h1> this creates an event via Ajax call to ashx handler.. Make sure you give right formats for the inputs</h1>
+    <p>
+        Name of the Event :&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="name" type="text" /></p>
+    <p>
+        description&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        <input id="desc" type="text" /></p>
+    <p>
+        location&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+        <input id="loc" type="text" /></p>
+    <p>
+        fee&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="fee" type="text" /></p>
+    <p>
+        type of event&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="type" type="text" /></p>
+    <p>
+        date&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <input id="date" type="text" /></p>
+    <p>
+        <input id="Submit1" type="submit" value="submit" onclick="po.callServer();" /></p>
+        <div id="TextArea1"></div>
+</body>
+</html>

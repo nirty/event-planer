@@ -1,0 +1,30 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+  <link rel="stylesheet" href="appCss/master.css"/>   
+    <title></title>
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    
+    <form id="form1" runat="server">
+    <div id="topContent">
+        <h1><a>Event Planner</a></h1>
+        <h3>Home | create event| about us</h3>  
+    </div>
+
+    <div id="mainContent">
+        <asp:ContentPlaceHolder id="MainContent" runat="server">
+        </asp:ContentPlaceHolder>
+    </div>
+    
+ 
+    <div id="footerContent"><h3> -- By  Andrew, Micheal & Nirty</h3>
+     </div>
+    </form>
+</body>
+</html>

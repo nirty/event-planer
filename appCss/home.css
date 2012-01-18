@@ -1,0 +1,75 @@
+﻿body 
+{
+    font-family: Trebuchet MS;
+    font-size:small;
+}
+
+#blueBar
+{
+    background-color: #3B5998;
+    min-width: 981px;
+    width: 100%;
+    z-index: 300;
+}
+
+#id {
+    color: purple;
+    background-color: #d8da3d }
+    
+.LoginControl
+{
+      background-color:#F7F7DE;
+      border-color:#CCCC99;
+      border-style:solid;
+      border-width:1px;
+      font-family :Verdana;
+      font-size:10px;    
+}
+
+#Text1
+{
+height: 26px;
+    width: 217px;
+}
+#Button1
+{
+    margin-bottom: 8px;
+}
+#searchbut
+{
+    height: 29px;
+    width: 64px;
+}
+#user
+{
+    float:left;
+    width: 165px;
+}
+#signoutbtn
+{
+    float:right;
+    margin-left: 564px;
+}
+        
+#events_table
+{   
+    border-collapse:separate;
+    border-spacing:5px 5px;
+    margin:1em auto;      
+}
+
+tr.alternating
+{
+	background:#FFBB33
+}
+
+ul
+{
+    list-style-type: none;
+    margin: 10px;
+}
+
+li
+{
+    float:left;
+}

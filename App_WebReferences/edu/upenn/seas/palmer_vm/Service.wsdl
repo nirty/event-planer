@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://wren.cis.upenn.edu/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://wren.cis.upenn.edu/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://wren.cis.upenn.edu/">
+      <s:element name="People">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="1" maxOccurs="1" name="eventID" type="s:int" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="PeopleResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="PeopleResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="string" nillable="true" type="s:string" />
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="PeopleSoapIn">
+    <wsdl:part name="parameters" element="tns:People" />
+  </wsdl:message>
+  <wsdl:message name="PeopleSoapOut">
+    <wsdl:part name="parameters" element="tns:PeopleResponse" />
+  </wsdl:message>
+  <wsdl:message name="PeopleHttpGetIn">
+    <wsdl:part name="eventID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PeopleHttpGetOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:message name="PeopleHttpPostIn">
+    <wsdl:part name="eventID" type="s:string" />
+  </wsdl:message>
+  <wsdl:message name="PeopleHttpPostOut">
+    <wsdl:part name="Body" element="tns:string" />
+  </wsdl:message>
+  <wsdl:portType name="AttendingSoap">
+    <wsdl:operation name="People">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns list of attendees for event given</wsdl:documentation>
+      <wsdl:input message="tns:PeopleSoapIn" />
+      <wsdl:output message="tns:PeopleSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AttendingHttpGet">
+    <wsdl:operation name="People">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns list of attendees for event given</wsdl:documentation>
+      <wsdl:input message="tns:PeopleHttpGetIn" />
+      <wsdl:output message="tns:PeopleHttpGetOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:portType name="AttendingHttpPost">
+    <wsdl:operation name="People">
+      <wsdl:documentation xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">Returns list of attendees for event given</wsdl:documentation>
+      <wsdl:input message="tns:PeopleHttpPostIn" />
+      <wsdl:output message="tns:PeopleHttpPostOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="AttendingSoap" type="tns:AttendingSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="People">
+      <soap:operation soapAction="http://wren.cis.upenn.edu/People" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AttendingSoap12" type="tns:AttendingSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="People">
+      <soap12:operation soapAction="http://wren.cis.upenn.edu/People" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AttendingHttpGet" type="tns:AttendingHttpGet">
+    <http:binding verb="GET" />
+    <wsdl:operation name="People">
+      <http:operation location="/People" />
+      <wsdl:input>
+        <http:urlEncoded />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="AttendingHttpPost" type="tns:AttendingHttpPost">
+    <http:binding verb="POST" />
+    <wsdl:operation name="People">
+      <http:operation location="/People" />
+      <wsdl:input>
+        <mime:content type="application/x-www-form-urlencoded" />
+      </wsdl:input>
+      <wsdl:output>
+        <mime:mimeXml part="Body" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Attending">
+    <wsdl:port name="AttendingSoap" binding="tns:AttendingSoap">
+      <soap:address location="http://palmer-vm.seas.upenn.edu/User23/EventProject/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AttendingSoap12" binding="tns:AttendingSoap12">
+      <soap12:address location="http://palmer-vm.seas.upenn.edu/User23/EventProject/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AttendingHttpGet" binding="tns:AttendingHttpGet">
+      <http:address location="http://palmer-vm.seas.upenn.edu/User23/EventProject/Service.asmx" />
+    </wsdl:port>
+    <wsdl:port name="AttendingHttpPost" binding="tns:AttendingHttpPost">
+      <http:address location="http://palmer-vm.seas.upenn.edu/User23/EventProject/Service.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
